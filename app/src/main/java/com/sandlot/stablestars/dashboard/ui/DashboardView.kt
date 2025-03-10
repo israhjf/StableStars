@@ -1,7 +1,11 @@
 package com.sandlot.stablestars.dashboard.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,24 +24,42 @@ fun DashboardView(
     navController: NavController,
     dashboardVM: DashboardViewModel = viewModel()
 ) {
+    Column{
+        DashboardHeader()
+        DashboardBody(navController)
+    }
+}
+
+@Composable
+fun DashboardHeader(){
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(16.dp),
+        text = "Creekside Equestrian",
+        style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+        color = MaterialTheme.colorScheme.onBackground
+    )
+}
+
+@Composable
+fun DashboardBody(
+    navController: NavController
+){
     val currentPoints: Int by remember { mutableStateOf(50) }
     val totalPoints: Int by remember { mutableStateOf(100) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.surfaceContainer)
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Creekside Equestrian",
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold
-        )
-        Text(text = "Current Tasks", style = MaterialTheme.typography.bodyMedium)
+        NotificationCard()
 
-        // Task Cards
         TaskCard(title = "Basic", pointsRange = "1-5 pts") {
             navController.navigate("basic_tasks")
         }
@@ -49,7 +71,42 @@ fun DashboardView(
         }
 
         Spacer(modifier = Modifier.weight(1f))
-        Text(text = "${currentPoints} pts / ${totalPoints}", style = MaterialTheme.typography.bodyMedium)
+
+        // Points Display
+        Text(
+            text = "${currentPoints} pts / ${totalPoints}",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onBackground // Dark text color
+        )
+    }
+}
+
+@Composable
+fun NotificationCard(){
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        )
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+//            Icon(
+//                imageVector = Icons.Default.CheckCircle,
+//                contentDescription = null,
+//                tint = MaterialTheme.colorScheme.primary // Green accent icon
+//            )
+            Icon(Icons.Default.Notifications, contentDescription = "notifications")
+            Text(
+                text = "There are 9 available tasks!",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
     }
 }
 
@@ -59,14 +116,27 @@ fun TaskCard(title: String, pointsRange: String, onClick: () -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         onClick = onClick,
-        colors = CardDefaults.cardColors(containerColor = Color.LightGray)
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface, // Light card background
+            contentColor = MaterialTheme.colorScheme.onSurface  // Text color on card
+        )
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            Text(text = title, style = MaterialTheme.typography.titleMedium)
-            Text(text = pointsRange, style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface // Dark text for title
+            )
+            Text(
+                text = pointsRange,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant // Muted text for points range
+            )
         }
     }
 }
+
+
