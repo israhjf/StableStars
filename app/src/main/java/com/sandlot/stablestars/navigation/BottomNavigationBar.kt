@@ -15,14 +15,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.surface, // Background color for the navigation bar
-        tonalElevation = 0.dp // Ensure the elevation matches the surface color
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 0.dp
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         val currentRouteClassName = currentRoute?.substringAfterLast(".")
-        Log.d("TEST", "currentRouteClassName: $currentRouteClassName")
-        Log.d("TEST", "currentRoute: ${AppView.Dashboard.toString()}")
 
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
@@ -30,11 +28,11 @@ fun BottomNavigationBar(navController: NavController) {
             selected = currentRouteClassName == AppView.Dashboard.toString(),
             onClick = { navController.navigate(AppView.Dashboard) },
             colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = MaterialTheme.colorScheme.primary, // Green when selected
-                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant, // Muted when unselected
+                selectedIconColor = MaterialTheme.colorScheme.primary,
+                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 selectedTextColor = MaterialTheme.colorScheme.primary,
                 unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                indicatorColor = MaterialTheme.colorScheme.primaryContainer // Background for selected item
+                indicatorColor = MaterialTheme.colorScheme.primaryContainer
             )
         )
 

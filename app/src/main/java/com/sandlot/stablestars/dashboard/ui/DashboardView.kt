@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.sandlot.stablestars.navigation.AppView
 
 @Composable
 fun DashboardView(
@@ -61,7 +62,7 @@ fun DashboardBody(
         NotificationCard()
 
         TaskCard(title = "Basic", pointsRange = "1-5 pts") {
-            navController.navigate("basic_tasks")
+            navController.navigate(AppView.BasicTasks)
         }
         TaskCard(title = "Intermediate", pointsRange = "6-10 pts") {
             navController.navigate("intermediate_tasks")
@@ -76,7 +77,7 @@ fun DashboardBody(
         Text(
             text = "${currentPoints} pts / ${totalPoints}",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground // Dark text color
+            color = MaterialTheme.colorScheme.onBackground
         )
     }
 }
@@ -117,8 +118,8 @@ fun TaskCard(title: String, pointsRange: String, onClick: () -> Unit) {
         shape = RoundedCornerShape(8.dp),
         onClick = onClick,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface, // Light card background
-            contentColor = MaterialTheme.colorScheme.onSurface  // Text color on card
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
         )
     ) {
         Column(
@@ -128,12 +129,12 @@ fun TaskCard(title: String, pointsRange: String, onClick: () -> Unit) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface // Dark text for title
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = pointsRange,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant // Muted text for points range
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }

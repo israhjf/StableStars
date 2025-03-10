@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.sandlot.stablestars.contactadmin.ui.ContactAdminView
+import com.sandlot.stablestars.dashboard.ui.BasicTasksView
 import com.sandlot.stablestars.dashboard.ui.DashboardView
 import com.sandlot.stablestars.leaderboard.ui.LeaderboardVIew
 
@@ -22,7 +23,7 @@ fun Navigation(
         startDestination = startScreen,
     ) {
         composable<AppView.Dashboard> { DashboardView(navController) }
-//        composable<AppView.BasicTasks> { BasicTasksView() }
+        composable<AppView.BasicTasks> { BasicTasksView(navController) }
 //        composable<AppView.IntermediateTasks> { IntermediateTasksView() }
 //        composable<AppView.AdvancedTasks> { AdvancedTasksView() }
         composable<AppView.Leaderboard> { LeaderboardVIew(navController) }
