@@ -1,6 +1,6 @@
 package com.sandlot.stablestars.navigation
 
-import androidx.compose.foundation.background
+import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
@@ -8,7 +8,6 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -21,12 +20,15 @@ fun BottomNavigationBar(navController: NavController) {
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
+        val currentRouteClassName = currentRoute?.substringAfterLast(".")
+        Log.d("TEST", "currentRouteClassName: $currentRouteClassName")
+        Log.d("TEST", "currentRoute: ${AppView.Dashboard.toString()}")
 
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
             label = { Text("Home") },
-            selected = currentRoute == "dashboard",
-            onClick = { navController.navigate("dashboard") },
+            selected = currentRouteClassName == AppView.Dashboard.toString(),
+            onClick = { navController.navigate(AppView.Dashboard) },
             colors = NavigationBarItemDefaults.colors(
                 selectedIconColor = MaterialTheme.colorScheme.primary, // Green when selected
                 unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant, // Muted when unselected
@@ -39,8 +41,8 @@ fun BottomNavigationBar(navController: NavController) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Leaderboard") },
             label = { Text("Leaderboard") },
-            selected = currentRoute == "leaderboard",
-            onClick = { navController.navigate("leaderboard") },
+            selected = currentRouteClassName == AppView.Leaderboard.toString(),
+            onClick = { navController.navigate(AppView.Leaderboard) },
             colors = NavigationBarItemDefaults.colors(
                 selectedIconColor = MaterialTheme.colorScheme.primary,
                 unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -53,8 +55,8 @@ fun BottomNavigationBar(navController: NavController) {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Email, contentDescription = "Contact Admin") },
             label = { Text("Contact Admin") },
-            selected = currentRoute == "contact_admin",
-            onClick = { navController.navigate("contact_admin") },
+            selected = currentRouteClassName == AppView.ContactAdmin.toString(),
+            onClick = { navController.navigate(AppView.ContactAdmin) },
             colors = NavigationBarItemDefaults.colors(
                 selectedIconColor = MaterialTheme.colorScheme.primary,
                 unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,

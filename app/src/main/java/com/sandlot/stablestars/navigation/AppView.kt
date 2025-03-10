@@ -21,7 +21,7 @@ sealed class AppView() {
     data object Leaderboard: AppView()
 
     @Serializable
-    data object Contact: AppView()
+    data object ContactAdmin: AppView()
 
 //    @Serializable
 //    class ViewWithArg(val arg: String): AppView()
